@@ -1,7 +1,6 @@
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
-import plumberRouter from "./routes/plumber.js";
 import userRouter from "./routes/user.js";
 
 
@@ -19,7 +18,6 @@ app.use(cors());
 
 
 // use routes
-app.use(plumberRouter)
 app.use(userRouter)
 
 //  listen for incoming requests

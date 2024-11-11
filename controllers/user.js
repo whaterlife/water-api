@@ -1,67 +1,84 @@
-import { UserModel } from "../models/user.js";
-import { userLoginValidator, userRegisterValidator, userUpdateValidator } from "../validators/user.js";
-import bcrypt from "bcryptjs";
+import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
+import { userModel } from "../models/user.js";
+import { plumberLoginValidator, plumberRegisterValidator, plumberUpdateValidator } from "../validators/user.js";
 
-export const userRegister = async (req, res, next) => {
+
+export const registerplumber = async (req, res, next) => {
+   try {
+     // validate plumber input
+     const { error, value } = plumberRegisterValidator.validate({
+        ...req.body,
+        photo: req.file?.filename
+     });
+     if (error) {
+         return res.status(422).json(error);
+     }
+     // check if plumber does not exist
+     const plumber = await userModel.findOne({ email: value.email });
+     if (plumber) {
+         return res.status(409).json('plumber already exist');
+     }
+     // hash their password
+     const hashedpassword = bcrypt.hashSync(value.password, 10);
+     // save the plumber into database
+     await userModel.create({
+      ...value,
+      password: hashedpassword
+  });
+     // send plumber confirmation email
+
+     // respond to request
+     res.json('plumber registered');
+   } catch (error) {
+    next(error);
+    
+   }
+}
+
+
+export const getProfile = async (req, res, next) => {
   try {
-    //validate user input
-    const {error, value } = userRegisterValidator.validate(req.body);
-    if (error) {
-        return res.status(422).json(error);
-    }
-      // check if user doesnot exist
-      const user = await UserModel.findOne({email: value.email });
-      if (user) {
-        return res.status(409).json('user already exist');
-      }
-      // hash their password
-      const hashedpassword = bcrypt.hashSync(value.password, 10);
-      // save the user into database
-      await UserModel.create({
-          ...value,
-          password: hashedpassword
-      });
-      // send user confirmation email
-      await mailTransporter.sendMail({
-          to: value.email,
-          subject: 'user '
-      })
+      // find authenticated plumber from database
+      const plumber = await userModel
+          .findById(req.auth.id)
+          .select({ password: false });
       // respond to request
-      res.json('User registered!');
+      res.json(plumber);
   } catch (error) {
-    next (error)
+      next(error)
+
   }
 }
 
 
-export const userLogin = async (req, res, next) => {
+export const loginplumber = async (req, res, next) => {
   try {
-      // validate user input
-      const { error, value } = userLoginValidator.validate(req.body);
+      // validate plumber input
+      const { error, value } = plumberLoginValidator.validate(req.body);
       if (error) {
           return res.status(422).json(error)
       }
-      // find one user with identifier
-      const user = await UserModel.findOne({ email: value.email });
-      if (!user) {
-          return res.status(404).json('user does not exist')
+      // find one plumber with identifier
+      const plumber = await userModel.findOne({ email: value.email });
+      if (!plumber) {
+          return res.status(404).json('plumber does not exist!')
       }
       // compare their passwords
-      const correctPassword = bcrypt.compareSync(value.password, user.password);
+      const correctPassword = bcrypt.compareSync(value.password, plumber.password);
       if (!correctPassword) {
           return res.status(401).json('invalid credentials!');
       }
-      // sign a token for user
+      // sign a token for plumber
       const token = jwt.sign({
-          id: user.id
+          id: plumber.id
       },
           process.env.JWT_PRIVATE_KEY,
           { expiresIn: '24h' }
       );
       // respond to request
       res.json({
-          message: 'User logged in successfully',
+          message: 'plumber logged in successfully',
           accessToken: token
       });
   } catch (error) {
@@ -71,25 +88,27 @@ export const userLogin = async (req, res, next) => {
 }
 
 
-export const userLogout = (req, res, next) => {
-  res.json('User logged out successfully');
+export const logoutplumber = (req, res, next) => {
+  res.json('plumber logged out successfully');
 }
 
 
-export const userUpdate = async (req, res, next) => {
-try {
-  // validate user input
-  const { error, value } = userUpdateValidator.validate({
-    ...req.body
-  });
-  if (error) {
-    return res.status(422).json(error);
+export const updateprofile = async (req, res, next) => {
+  try {
+      // validate plumber input
+      const { error, value } = plumberUpdateValidator.validate({
+          ...req.body,
+          photo: req.file?.filename
+      });
+      if (error) {
+          return res.status(422).json(error);
+      }
+      // update plumber
+      await userModel.findByIdAndUpdate(req.auth.id, value);
+      //  respond to request
+      res.json('plumber profile was updated');
+  } catch (error) {
+      next();
+
   }
-    // update user
-    await UserModel.findByIdAndUpdate(req.auth.id, value);
-    // respond to request 
-    res.json('user updated')
-} catch (error) {
-  next (error)
-}
-}
+} 
