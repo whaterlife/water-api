@@ -1,23 +1,23 @@
 import Joi from "joi"
 
 
-export const plumberRegisterValidator = Joi.object({
+export const userRegisterValidator = Joi.object({
     officeName: Joi.string(),
     firstname: Joi.string().required(),
     lastname: Joi.string().required(),
-    email: Joi.string().required(),
+    email: Joi.string().email().required(),
     location: Joi.string().required(),
     photo: Joi.string(),
     phoneNumber: Joi.string(),
     password: Joi.string().required()
 });
 
-export const plumberLoginValidator = Joi.object({
+export const userLoginValidator = Joi.object({
     email: Joi.string().required(),
     password: Joi.string().required()
 });
 
-export const plumberUpdateValidator = Joi.object({
+export const userUpdateValidator = Joi.object({
     location: Joi.string(),
     photo: Joi.string(),
     phoneNumber: Joi.string()

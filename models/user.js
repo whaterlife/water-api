@@ -5,7 +5,7 @@ const userSchema = new Schema({
     officeName: { type: String },
     firstname: { type: String, required: true },
     lastname: { type: String, required: true },
-    email: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
     location: { type: String, required: true },
     photo: { type: String },
     phoneNumber: { type: String },
