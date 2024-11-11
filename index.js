@@ -1,7 +1,8 @@
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
-import userRouter from "./routes/plumber.js";
+import plumberRouter from "./routes/plumber.js";
+import userRouter from "./routes/user.js";
 
 
 
@@ -18,9 +19,10 @@ app.use(cors());
 
 
 // use routes
+app.use(plumberRouter)
 app.use(userRouter)
 
 //  listen for incoming requests
-app.listen(3310, () => {
+app.listen(3100, () => {
     console.log('app is listening on port 3100');
 });

@@ -2,8 +2,10 @@ import { Schema, model } from "mongoose";
 import { toJSON } from "@reis/mongoose-to-json";
 
 export const userSchema = new Schema({
-    name: { type: String, required: true },
+    firstname: { type: String, required: true },
+    lastname: { type: String, required: true },
     email: { type: String, required: true },
+    location: { type: String, required: true },
     password: { type: String, required: true }
 }, {
     timestamps: true
@@ -11,6 +13,6 @@ export const userSchema = new Schema({
 
 userSchema.plugin(toJSON);
 
-export const userModel = model('user', userSchema);
+export const UserModel = model('user', userSchema);
 
 
