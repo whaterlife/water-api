@@ -24,7 +24,7 @@ export const createReport = async (req, res, next) => {
 
 // Get all reports
 export const getReports = async (req, res) => {
-    try {
+    try {wo
         const reports = await ReportModel.find();
         res.status(200).json(reports);
     } catch (error) {
