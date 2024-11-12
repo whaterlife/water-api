@@ -10,3 +10,12 @@ export const plumberIconUpload = multer({
     }),
     preservePath: true
 });
+
+
+export const reportPhotoUpload = multer({
+    storage: multerSaveFilesOrg({
+        apiAccessToken: process.env.SAVEFILESORG_API_KEY,
+        relativePath: '/water-api/report/*'
+    }),
+    preservePath: true
+});

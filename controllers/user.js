@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
 import { userModel } from "../models/user.js";
 import { userLoginValidator, userRegisterValidator, userUpdateValidator } from "../validators/user.js";
+import { mailTransporter } from "../utils/mail.js";
 
 
 export const registerUser = async (req, res, next) => {
@@ -27,6 +28,11 @@ export const registerUser = async (req, res, next) => {
       password: hashedpassword
   });
      // send user confirmation email
+     await mailTransporter.sendMail({
+        to: value.email,
+        subject: "User registration",
+        text: `Hello ${ value.name}, you have successfully registered with WATER4LIFE.`
+     })
 
      // respond to request
      res.json('user registered');
@@ -81,6 +87,12 @@ export const loginUser = async (req, res, next) => {
           message: 'user logged in successfully',
           accessToken: token
       });
+      // send a login confirmation email
+      await mailTransporter.sendMail({
+        to: user.mail,
+        subject: "Login Notice",
+        text: `Hello ${user.name}, you have logged in successfully into WATER4LIFE.`
+      })
   } catch (error) {
       next(error)
 

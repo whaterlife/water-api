@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import userRouter from "./routes/user.js";
+import reportRouter from "./routes/report.js";
 
 
 
@@ -19,6 +20,7 @@ app.use(cors());
 
 // use routes
 app.use(userRouter)
+app.use(reportRouter)
 
 //  listen for incoming requests
 app.listen(3100, () => {
