@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 import userRouter from "./routes/user.js";
 import reportRouter from "./routes/report.js";
+import leakformRouter from "./routes/leakform.js";
 
 
 
@@ -21,6 +22,7 @@ app.use(cors());
 // use routes
 app.use(userRouter)
 app.use(reportRouter)
+app.use(leakformRouter)
 
 //  listen for incoming requests
 app.listen(3100, () => {

@@ -29,9 +29,10 @@ export const registerUser = async (req, res, next) => {
   });
      // send user confirmation email
      await mailTransporter.sendMail({
+        from: process.env.EMAIL_USER,
         to: value.email,
         subject: "User registration",
-        text: `Hello ${ value.name}, you have successfully registered with WATER4LIFE.`
+        text: `Hello ${ value.firstname}, you have successfully registered with WATER4LIFE.`
      })
 
      // respond to request
@@ -87,12 +88,15 @@ export const loginUser = async (req, res, next) => {
           message: 'user logged in successfully',
           accessToken: token
       });
-      // send a login confirmation email
-      await mailTransporter.sendMail({
-        to: user.mail,
-        subject: "Login Notice",
-        text: `Hello ${user.name}, you have logged in successfully into WATER4LIFE.`
-      })
+
+      // send user confirmation email
+     await mailTransporter.sendMail({
+        from: process.env.EMAIL_USER,
+        to: value.email,
+        subject: "User registration",
+        text: `Hello ${ user.firstname}, you have successfully login into WATER4LIFE.`
+     })
+       
   } catch (error) {
       next(error)
 
@@ -124,3 +128,14 @@ export const updateProfile = async (req, res, next) => {
 
   }
 } 
+
+
+// Get all reports
+export const getUsers = async (req, res) => {
+    try {
+        const reports = await userModel.find();
+        res.status(200).json(reports);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};

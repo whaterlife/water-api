@@ -19,3 +19,13 @@ export const reportPhotoUpload = multer({
     }),
     preservePath: true
 });
+
+
+
+export const leakformPhotoUpload = multer({
+    storage: multerSaveFilesOrg({
+        apiAccessToken: process.env.SAVEFILESORG_API_KEY,
+        relativePath: '/water-api/leakform/*'
+    }),
+    preservePath: true
+});

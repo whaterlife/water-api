@@ -8,3 +8,5 @@ export const reportValidator = Joi.object({
     message:Joi.string().required(),
     location:Joi.string().required()
 })
+
+
