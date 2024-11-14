@@ -4,7 +4,8 @@ import cors from "cors";
 import userRouter from "./routes/user.js";
 import reportRouter from "./routes/report.js";
 import leakformRouter from "./routes/leakform.js";
-
+import statusRouter from "./routes/leakstatus.js";
+import reportStatusRouter from "./routes/reportstatus.js";
 
 
 // connect mongodb
@@ -23,6 +24,8 @@ app.use(cors());
 app.use(userRouter)
 app.use(reportRouter)
 app.use(leakformRouter)
+app.use(statusRouter)
+app.use(reportStatusRouter)
 
 //  listen for incoming requests
 app.listen(3100, () => {

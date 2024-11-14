@@ -1,5 +1,5 @@
 import express from 'express';
-import { setStatusInProgress, setStatusResolved } from '../controllers/leakform.js';
+import { setStatusInProgress, setStatusResolved } from '../controllers/leakstatus.js';
 
 const statusRouter = express.Router();
 
