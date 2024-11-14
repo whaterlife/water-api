@@ -9,7 +9,12 @@ const leaksSchema = new Schema({
     description:  {type: String, required: true},
     date:  {type: String, required: true},
     photo:  {type: String},
-    signature:  {type: String, required: true}
+    signature:  {type: String, required: true},
+    status: { 
+        type: String, 
+        enum: ['Pending', 'In Progress', 'Resolved'], 
+        default: 'Pending' 
+    }
 })
 
 leaksSchema.plugin(toJSON);

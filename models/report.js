@@ -6,7 +6,12 @@ const reportSchema = new Schema({
     email:  {type: String, required: true},
     photo:  {type: String, required: true},
     message:  {type: String, required: true},
-    location:  {type: String, required: true}
+    location:  {type: String, required: true},
+    status: { 
+        type: String, 
+        enum: ['Pending', 'In Progress', 'Resolved'], 
+        default: 'Pending' 
+    }
    
 })
 
