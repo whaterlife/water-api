@@ -8,7 +8,7 @@ const leaksSchema = new Schema({
     contact:  {type: String, required: true},
     description:  {type: String, required: true},
     date:  {type: String, required: true},
-    photo:  {type: String,required: true},
+    photo:  {type: String,},
     signature:  {type: String, required: true},
     status: { 
         type: String, 

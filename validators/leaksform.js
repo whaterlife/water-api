@@ -7,6 +7,6 @@ export const leaksformValidator = Joi.object({
     contact: Joi.string().required(),
     description: Joi.string().required(),
     date: Joi.string().required(),
-    photo: Joi.string().required(),
+    photo: Joi.string(),
     signature: Joi.string().required()
 })
