@@ -42,7 +42,7 @@ const user = await userModel.findById(req.auth.id)
 
 export const getLeakforms = async (req, res, next) => {
 try {
-    const { filter = "{}", sort = "{}", limit = 10, skip = 0} = req.query;
+    const { filter = "{}", sort = "{}", limit = 100, skip = 0} = req.query;
     // fetch form from database
     const leakforms = await LeaksModel
     .find(JSON.parse(filter))
