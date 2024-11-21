@@ -7,7 +7,7 @@ export const userRegisterValidator = Joi.object({
     lastname: Joi.string().required(),
     email: Joi.string().email().required(),
     location: Joi.string().required(),
-    photo: Joi.string(),
+    photo: Joi.string().required(),
     phoneNumber: Joi.string(),
     password: Joi.string().required()
 });
