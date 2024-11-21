@@ -2,15 +2,26 @@ export const permissions = [
     {
         role: 'user',
         actions: [
-            
+            'createLeakform',
+
         ]
     },
     {
         role: 'plumber',
         actions: [
-            'get_profile',
-            'update_profile',
-            'get_reports'
+            'getLeakforms',
+            'getLeakform'
+        ]
+    },
+    {
+        role: 'Admin',
+        actions: [
+            'getLeakforms',
+            'getLeakform',
+            'getReports',
+            'getReportById',
+            'updateReport',
+            'deleteReport'
         ]
     }
 ]

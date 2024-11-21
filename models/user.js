@@ -10,7 +10,11 @@ const userSchema = new Schema({
     photo: { type: String,required: true },
     phoneNumber: { type: String },
     password: { type: String, required: true },
-    role: { type: String, default: 'user', enum: ['user', 'plumber', 'admin'] }
+    role: {
+         type: String,
+          default: 'user', 
+          required: true,
+          enum: ['user', 'plumber', 'admin'] }
 
 
 }, {
